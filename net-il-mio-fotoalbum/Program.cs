@@ -1,3 +1,5 @@
+using net_il_mio_fotoalbum.Database;
+
 namespace net_il_mio_fotoalbum
 {
     public class Program
@@ -5,6 +7,9 @@ namespace net_il_mio_fotoalbum
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddDbContext<PhotographerShowcaseContext>();
+
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -28,7 +33,7 @@ namespace net_il_mio_fotoalbum
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Home}/{action=Index}/{slug?}");
 
             app.Run();
         }
