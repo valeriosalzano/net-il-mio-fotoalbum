@@ -13,6 +13,7 @@
         <p class="card-text fs-4 ps-3">@Model.Photo.Description</p>
         <ul class="list-group list-group-flush details-list">
             <li class="list-group-item bg-transparent"> <span class="fs-6 fw-bold">User Name: </span>@Model.UserName</li>
+            <li class="list-group-item bg-transparent"> <span class="fs-6 fw-bold">Visible: </span>@(Model.Photo.Visibility ? "yes" : "no")</li>
             <li class="list-group-item bg-transparent">
                 <span class="fs-6 fw-bold">Categories: </span>
                 @if (Model.Photo.Categories is not null && Model.Photo.Categories.Count > 0)

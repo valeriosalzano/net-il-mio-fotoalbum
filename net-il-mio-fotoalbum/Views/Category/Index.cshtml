@@ -1,18 +1,18 @@
 ﻿@{
-    Layout = "Admin/_Layout";
-    ViewData["Title"] = "Photo List";
+    ViewData["Title"] = "Category List";
+    Layout = "~/Views/Shared/Admin/_Layout.cshtml";
 }
 
-@model List<Photo>
+@model List<Category>
 
 <div class="text-end my-2">
-    <a class="btn btn-primary px-3" asp-action="create">Add a Photo</a>
+    <a class="btn btn-primary px-3" asp-action="create">Add a Category</a>
 </div>
 
 <div class="border rounded-2 p-3 my-3 bg-white shadow">
     @if(Model.Count() == 0)
     {
-        <p>No photo found, add one!</p>
+        <p>No categories found, add one!</p>
     }
     else
     {
@@ -20,32 +20,30 @@
             <thead>
                 <tr>
                     <th scope="col">ID</th>
-                    <th scope="col" class="d-none d-sm-table-cell">Image</th>
                     <th scope="col">Name</th>
                     <th scope="col" class="d-none d-md-table-cell">Description</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach(Photo photo in Model)
+                @foreach(Category category in Model)
                 {
                     <tr class="sweet-delete-target-wrapper">
-                        <th scope="row">@photo.Id</th>
-                        <td class="d-none d-sm-table-cell"><img class="w-100 rounded-2 card-img" src="/uploads/@photo.ImgPath" alt="" loading="lazy"></td>
-                        <td class="sweet-delete-target-title">@photo.Title</td>
-                        <td class="d-none d-md-table-cell">@photo.Description</td>
+                        <th scope="row">@category.Id</th>
+                        <td class="sweet-delete-target-title">@category.Name</td>
+                        <td class="d-none d-md-table-cell">@category.Description</td>
                         <td>
-                            <div class="d-flex flex-column">
+                            <div class="d-flex flex-row">
 
-                                <a href="@Url.Action("Details","Photo", new {slug = photo.Slug})" class="btn btn-outline-info mb-2">
+                                <a href="@Url.Action("Details","Category", new {id = category.Id})" class="btn btn-outline-info me-2">
                                     <i class="fa-solid fa-eye"></i>
                                 </a>
  
-                                <a href="@Url.Action("Edit","Photo", new {slug = photo.Slug})" class="btn btn-outline-warning mb-2">
+                                <a href="@Url.Action("Edit","Category", new {id = category.Id})" class="btn btn-outline-warning me-2">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
 
-                                <form asp-action="Delete" asp-route-slug="@photo.Slug" method="post">
+                                <form asp-action="Delete" asp-route-id="@category.Id" method="post">
                                     @Html.AntiForgeryToken()
                                     <button type="submit" class="btn btn-outline-danger btn-sweet-delete w-100">
                                         <i class="fa-solid fa-trash"></i>
@@ -65,5 +63,4 @@
 @section Scripts {
     <script src="~/js/sweet-delete.js"></script>
 }
-
 

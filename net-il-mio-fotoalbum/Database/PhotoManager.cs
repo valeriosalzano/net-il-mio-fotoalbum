@@ -34,7 +34,7 @@ namespace net_il_mio_fotoalbum.Database
                 return base._dbSet
                     .Include(photo => photo.Categories)
                     .Where(photo => photo.Id == id)
-                    .First();
+                    .FirstOrDefault();
             else
                 return base.GetById(id);
         }
@@ -45,7 +45,7 @@ namespace net_il_mio_fotoalbum.Database
                 return base._dbSet
                     .Include(photo => photo.Categories)
                     .Where(photo => photo.Slug == slug)
-                    .First();
+                    .FirstOrDefault();
             else
                 return base._dbSet.Where(photo => photo.Slug == slug).First();
         }

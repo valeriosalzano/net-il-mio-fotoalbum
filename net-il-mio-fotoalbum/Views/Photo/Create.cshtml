@@ -4,17 +4,18 @@
 }
 @model PhotoFormModel
 
-<form asp-action="Create" method="post" enctype="multipart/form-data">
-    @Html.AntiForgeryToken()
+<div class="border rounded-2 p-3 my-3 bg-white shadow">
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
 
-    <partial name="Admin/Partials/_PhotoFields" model="Model"/>
+        <partial name="Admin/Partials/_PhotoFields" model="Model"/>
 
-    <div class="text-center">
-        <button class="btn btn-primary px-3 w-100" type="submit">Submit</button>
-    </div>
+        <div class="text-center">
+            <button class="btn btn-primary px-3 w-100" type="submit">Submit</button>
+        </div>
 
-</form>
-
+    </form>
+</div>
 @section Scripts {
     <script src="~/js/select-filter.js"></script>
 }

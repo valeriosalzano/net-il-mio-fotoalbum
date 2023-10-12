@@ -1,22 +1,23 @@
 ﻿@{
     Layout = "Admin/_Layout";
-    ViewData["Title"] = $"Edit Pizza";
+    ViewData["Title"] = $"Edit Photo";
 }
 @model PhotoFormModel
 
-<form asp-action="Edit" method="post" enctype="multipart/form-data">
-    @Html.AntiForgeryToken()
+<div class="border rounded-2 p-3 my-3 bg-white shadow">
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
 
-    <input type="hidden" asp-for="Photo.Id">
-    <input type="hidden" asp-for="Photo.ImgPath">
-    <partial name="Admin/Partials/_PhotoFields" model="Model"/>
+        <input type="hidden" asp-for="Photo.Id">
+        <input type="hidden" asp-for="Photo.ImgPath">
+        <partial name="Admin/Partials/_PhotoFields" model="Model"/>
 
-    <div class="text-center">
-        <button class="btn btn-primary px-3 w-100" type="submit">Submit</button>
-    </div>
+        <div class="text-center">
+            <button class="btn btn-primary px-3 w-100" type="submit">Submit</button>
+        </div>
 
-</form>
-
+    </form>
+</div>
 @section Scripts {
     <script src="~/js/select-filter.js"></script>
 }

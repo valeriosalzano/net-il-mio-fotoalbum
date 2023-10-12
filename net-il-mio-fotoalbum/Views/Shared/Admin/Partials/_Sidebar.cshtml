@@ -1,40 +1,35 @@
 ﻿<div class="flex-shrink-0 p-3 bg-light text-dark h-100 overflow-auto">
     <ul class="list-unstyled ps-0 mb-0 d-flex justify-content-center d-md-block flex-wrap g-2">
-        <li class="mb-2 px-2 me-md-0">
-            <button class="btn btn-primary w-100 btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
-                Home
-            </button>
-            <div class="collapse" id="home-collapse">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-2">
-                    <li><a href="#" class="link-body-emphasis link-dark d-inline-flex text-decoration-none rounded">Overview</a></li>
-                    <li><a href="#" class="link-body-emphasis link-dark d-inline-flex text-decoration-none rounded">Updates</a></li>
-                    <li><a href="#" class="link-body-emphasis link-dark d-inline-flex text-decoration-none rounded">Reports</a></li>
-                </ul>
-            </div>
-        </li>
+        
         <li class="mb-2 px-2 me-md-0">
             <button class="btn btn-primary w-100 btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
                 Dashboard
             </button>
             <div class="collapse" id="dashboard-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-2">
-                    <li><a href="#" class="link-body-emphasis link-dark d-inline-flex text-decoration-none rounded">Overview</a></li>
-                    <li><a href="#" class="link-body-emphasis link-dark d-inline-flex text-decoration-none rounded">Weekly</a></li>
-                    <li><a href="#" class="link-body-emphasis link-dark d-inline-flex text-decoration-none rounded">Monthly</a></li>
-                    <li><a href="#" class="link-body-emphasis link-dark d-inline-flex text-decoration-none rounded">Annually</a></li>
+                    <li><a asp-controller="Photo" asp-action="Index" class="link-body-emphasis link-dark d-inline-flex text-decoration-none rounded">Home</a></li>
                 </ul>
             </div>
         </li>
         <li class="mb-2 px-2 me-md-0">
-            <button class="btn btn-primary w-100 btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-                Orders
+            <button class="btn btn-primary w-100 btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#photos-collapse" aria-expanded="false">
+                Photos
             </button>
-            <div class="collapse" id="orders-collapse">
+            <div class="collapse" id="photos-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-2">
-                    <li><a href="#" class="link-body-emphasis link-dark d-inline-flex text-decoration-none rounded">New</a></li>
-                    <li><a href="#" class="link-body-emphasis link-dark d-inline-flex text-decoration-none rounded">Processed</a></li>
-                    <li><a href="#" class="link-body-emphasis link-dark d-inline-flex text-decoration-none rounded">Shipped</a></li>
-                    <li><a href="#" class="link-body-emphasis link-dark d-inline-flex text-decoration-none rounded">Returned</a></li>
+                    <li><a asp-controller="Photo" asp-action="Index" class="link-body-emphasis link-dark d-inline-flex text-decoration-none rounded">Show Photos List</a></li>
+                    <li><a asp-controller="Photo" asp-action="Create" class="link-body-emphasis link-dark d-inline-flex text-decoration-none rounded">New Photo</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="mb-2 px-2 me-md-0">
+            <button class="btn btn-primary w-100 btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#categories-collapse" aria-expanded="false">
+                Categories
+            </button>
+            <div class="collapse" id="categories-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-2">
+                    <li><a asp-controller="Category" asp-action="Index" class="link-body-emphasis link-dark d-inline-flex text-decoration-none rounded">Show Categories List</a></li>
+                    <li><a asp-controller="Category" asp-action="Create" class="link-body-emphasis link-dark d-inline-flex text-decoration-none rounded">New Category</a></li>
                 </ul>
             </div>
         </li>
