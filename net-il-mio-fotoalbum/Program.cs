@@ -1,4 +1,8 @@
 using net_il_mio_fotoalbum.Database;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
+using net_il_mio_fotoalbum.Models;
 
 namespace net_il_mio_fotoalbum
 {
@@ -10,9 +14,21 @@ namespace net_il_mio_fotoalbum
 
             builder.Services.AddDbContext<PhotographerShowcaseContext>();
 
+            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<PhotographerShowcaseContext>();
+
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+            builder.Services.AddScoped<DbContext, PhotographerShowcaseContext>();
+            builder.Services.AddScoped<PhotoManager, PhotoManager>();
+            builder.Services.AddScoped<IRepository<Category>, EntityRepository<Category>>();
+            builder.Services.AddScoped<UserManager<IdentityUser>, UserManager<IdentityUser>>();
 
             var app = builder.Build();
 
@@ -29,11 +45,14 @@ namespace net_il_mio_fotoalbum
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{slug?}");
+
+            app.MapRazorPages();
 
             app.Run();
         }

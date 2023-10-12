@@ -1,0 +1,68 @@
+﻿@{
+    Layout = "Admin/_Layout";
+    ViewData["Title"] = "Pizza List";
+}
+
+@model List<Photo>
+
+<div class="text-end my-2">
+    <a class="btn btn-primary px-3" asp-action="create">Add a Pizza</a>
+</div>
+
+<div class="table-container border rounded-2 p-3 my-3 bg-white shadow overflow-scroll">
+    @if(Model.Count() == 0)
+    {
+        <p>No photo found, add one!</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col" class="d-none d-sm-table-cell">Image</th>
+                    <th scope="col">Name</th>
+                    <th scope="col" class="d-none d-md-table-cell">Description</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(Photo photo in Model)
+                {
+                    <tr class="sweet-delete-target-wrapper">
+                        <th scope="row">@photo.Id</th>
+                        <td class="d-none d-sm-table-cell"><img class="w-100 rounded-2 model-img" src="@photo.ImgPath" alt="" loading="lazy"></td>
+                        <td class="sweet-delete-target-title">@photo.Title</td>
+                        <td class="d-none d-md-table-cell">@photo.Description</td>
+                        <td>
+                            <div class="d-flex flex-column">
+                                <a href="@Url.Action("Details","Photo", new {slug = photo.Slug})" class="btn btn-outline-info mb-2">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                                @if (User.IsInRole("SUPERADMIN"))
+                                {
+                                    <a href="@Url.Action("Edit","Photo", new {slug = photo.Slug})" class="btn btn-outline-warning mb-2">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                    <form asp-action="Delete" asp-route-slug="@photo.Slug" method="post">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-outline-danger btn-sweet-delete w-100">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </form>
+                                }
+                            </div>
+                        </td>
+                    </tr>  
+                }
+            </tbody>
+        </table>
+    }
+</div>
+<partial name="Admin/Partials/_DeleteModal"/>
+
+@section Scripts {
+    <script src="~/js/sweet-delete.js"></script>
+}
+
+

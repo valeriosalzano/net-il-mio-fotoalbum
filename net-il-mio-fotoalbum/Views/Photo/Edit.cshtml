@@ -1,0 +1,21 @@
+﻿@{
+    Layout = "Admin/_Layout";
+    ViewData["Title"] = $"Edit Pizza";
+}
+@model PhotoFormModel
+
+<form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" asp-for="Photo.Id">
+    <partial name="Admin/Partials/_PizzaFields" model="Model"/>
+
+    <div class="text-center">
+        <button class="btn btn-primary px-3 w-100" type="submit">Submit</button>
+    </div>
+
+</form>
+
+@section Scripts {
+    <script src="~/js/select-filter.js"></script>
+}

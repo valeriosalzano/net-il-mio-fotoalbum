@@ -1,0 +1,32 @@
+﻿<header class="border-bottom bg-light">
+    <nav class="navbar navbar-light navbar-expand-lg bg-light border-bottom bg-body-tertiary px-3 container-fluid">
+        <a class="navbar-brand d-inline-block" href="/">
+            <span class="display-5 fw-semibold align-middle">Photo Gallery</span>
+        </a>
+
+        <div>
+            <button class="navbar-toggler me-2 align-middle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarLinks" aria-controls="navbarLinks" aria-expanded="true" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <button class="navbar-toggler py-2 align-middle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarUser" aria-controls="navbarUser" aria-expanded="true" aria-label="Toggle navigation">
+                <i class="fa-solid fa-user"></i>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarLinks">
+            <ul class="navbar-nav text-center">
+                <li class="nav-item">
+                    <a class="nav-link active link-dark" aria-current="page" asp-action="Index">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link link-dark" href="#">PRIVACY</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link link-dark" href="#">NEWS</a>
+                </li>
+            </ul>
+        </div>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarUser">
+            <partial name="_LoginPartial" />
+        </div>
+    </nav>
+</header>

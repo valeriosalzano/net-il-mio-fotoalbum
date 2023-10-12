@@ -1,0 +1,57 @@
+﻿@{
+    Layout = "Admin/_Layout";
+    ViewData["Title"] = $"Photo Details";
+}
+
+@model Photo;
+
+<div class="container-fluid py-3">
+    <div class="card wrapper shadow position-relative overflow-hidden">
+        <img src="@Model.ImgPath" class="card-img details-img-top card-img-top position-absolute ratio ratio-1x1" alt="ceci n'est past une photo">
+      <div class="card-body details-card">
+        <h5 class="sweet-delete-title card-title display-5 ps-2">@Model.Title</h5>
+        <p class="card-text fs-4 ps-3">@Model.Description</p>
+        <ul class="list-group list-group-flush details-list">
+                <li class="list-group-item bg-transparent"> <span class="fs-6 fw-bold">User Id: </span>@Model.UserId</li>
+                <li class="list-group-item bg-transparent">
+                    <span class="fs-6 fw-bold">Categories: </span>
+            @if (Model.Categories is not null && Model.Categories.Count > 0)
+            {
+                @foreach(Category category in Model.Categories)
+                {
+                        <span class="badge rounded-pill bg-secondary">@category.Name</span>
+                }
+            }
+            else
+            {
+                <span>No categorys found.</span>
+            }
+        </li>
+                <li class="list-group-item bg-transparent"><span class="fs-6 fw-bold">Image Path: </span>@Model.ImgPath</li>
+                <li class="list-group-item bg-transparent"><span class="fs-6 fw-bold">Slug: </span>@Model.Slug</li>
+        </ul>
+        <div class="d-flex justify-content-center">
+
+            <a class="btn btn-primary me-2" href="@Url.Action("Index","Photo")">Return to List</a>
+
+            <a href="@Url.Action("Edit","Pizza", new {slug = Model.Slug})" class="btn btn-warning px-2 me-2">
+                Modify <i class="fa-solid fa-pen-to-square"></i>
+            </a>
+
+            <form asp-action="Delete" asp-route-slug="@Model.Slug" method="post">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-danger btn-sweet-delete px-2 me-2">
+                    Delete <i class="fa-solid fa-trash"></i>
+                </button>
+            </form>
+
+        </div>
+      </div>
+    </div>
+</div>
+
+<partial name="Admin/Partials/_DeleteModal" />
+
+@section Scripts {
+    <script src="~/js/sweet-delete.js"></script>
+}

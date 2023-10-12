@@ -1,0 +1,27 @@
+﻿@model PhotoFormModel
+
+<div class="mb-3">
+    <label asp-for="Photo.Title" class="form-label">Title *</label>
+    <input type="text" class="form-control" asp-for="Photo.Title">
+    <span class="invalid-feedback d-inline" asp-validation-for="Photo.Title"></span>
+    <span class="invalid-feedback d-inline" asp-validation-for="Photo.Slug"></span>
+</div>
+
+@if (Model.Categories is not null)
+{
+    <div class="mb-3">
+        <label asp-for="SelectedCategoriesId" class="mb-1"> Categories:</label>
+        <input type="text" class="form-control w-100 mb-2" id="select-filter-input" placeholder="Filter ingredients...">
+        <select class="w-100 form-select" asp-for="SelectedCategoriesId" multiple="true" size="5" asp-items="@Model.Categories"></select>
+    </div>
+}
+<div class="mb-3">
+    <label asp-for="Photo.Description" class="form-label">Description *</label>
+    <textarea class="form-control" asp-for="Photo.Description" rows="3" placeholder="Write a photo description..."></textarea>
+    <span class="invalid-feedback d-inline" asp-validation-for="Photo.Description"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="Photo.ImgPath" class="form-label">Image Path</label>
+    <input type="text" class="form-control" asp-for="Photo.ImgPath">
+    <span class="invalid-feedback d-inline" asp-validation-for="Photo.ImgPath"></span>
+</div>

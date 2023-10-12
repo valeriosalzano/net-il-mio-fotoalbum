@@ -19,7 +19,7 @@ namespace net_il_mio_fotoalbum.Database
             return _dbSet.Find(id);
         }
 
-        public IEnumerable<T> GetFilteredList(Func<T, bool> filter)
+        public IEnumerable<T> GetAllFiltered(Func<T, bool> filter)
         {
             return _dbSet.Where(filter).ToList();
         }
@@ -32,21 +32,16 @@ namespace net_il_mio_fotoalbum.Database
         public void Add(T entity)
         {
             _dbSet.Add(entity);
-            _context.SaveChanges();
         }
 
-        public void Update(T originalEntity, T modifiedEntity)
+        public void Update(T entity)
         {
-            EntityEntry contextOriginalEntity = _context.Entry(originalEntity);
-            contextOriginalEntity.CurrentValues.SetValues(modifiedEntity);
-            contextOriginalEntity.State = EntityState.Modified;
-            _context.SaveChanges();
+            _context.Entry(entity).State = EntityState.Modified;
         }
 
         public void Delete(T entity)
         {
             _dbSet.Remove(entity);
-            _context.SaveChanges();
         }
     }
 }

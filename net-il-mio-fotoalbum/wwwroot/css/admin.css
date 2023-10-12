@@ -1,0 +1,49 @@
+﻿/* CONTENT & SIDEBAR SIZE*/
+.sidebar, .content {
+    width: 100%;
+}
+
+@media all and (min-width: 768px) {
+    .sidebar {
+        width: 200px;
+        height: 100%;
+    }
+
+    .content {
+        width: calc(100% - 200px);
+    }
+}
+
+/* MAIN */
+
+.card-img {
+    object-fit: cover;
+    height: 150px;
+    aspect-ratio: 1/1;
+    background: #000000 url("/img/pizza-default.jpg") center;
+    background-size: cover;
+}
+
+.details-card {
+    padding-top: 350px;
+    z-index: 1;
+    background: linear-gradient(0deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.7) 50%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%);
+}
+
+.details-img-top {
+    max-width: 600px;
+    align-self: center;
+}
+
+    .details-img-top.pizza-img {
+        width: 100%;
+        max-width: unset;
+        height: auto;
+    }
+
+.details-list {
+}
+/* MODAL */
+#modal-sweet-delete {
+    background-color: #00000075;
+}

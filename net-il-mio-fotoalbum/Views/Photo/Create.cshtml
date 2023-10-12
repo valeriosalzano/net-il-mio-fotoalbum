@@ -1,0 +1,20 @@
+﻿@{
+    Layout = "Admin/_Layout";
+    ViewData["Title"] = $"New Photo";
+}
+@model PhotoFormModel
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+
+    <partial name="Admin/Partials/_PhotoFields" model="Model"/>
+
+    <div class="text-center">
+        <button class="btn btn-primary px-3 w-100" type="submit">Submit</button>
+    </div>
+
+</form>
+
+@section Scripts {
+    <script src="~/js/select-filter.js"></script>
+}

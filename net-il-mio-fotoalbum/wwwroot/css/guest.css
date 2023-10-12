@@ -1,0 +1,20 @@
+﻿
+/* HEADER */
+header .nav-link {
+    color: white;
+}
+
+.navbar-brand span {
+    font-weight: 500;
+    color: deepskyblue;
+}
+
+
+/* MAIN */
+
+.highlighted-word {
+    color: deepskyblue;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+

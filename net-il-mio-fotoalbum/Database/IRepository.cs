@@ -4,8 +4,9 @@
     {
         T? GetById(int id);
         IEnumerable<T> GetAll();
+        IEnumerable<T> GetAllFiltered(Func<T, bool> filter);
         void Add(T entity);
-        void Update(T originalEntity, T modifiedEntity);
+        void Update(T entity);
         void Delete(T entity);
 
     }

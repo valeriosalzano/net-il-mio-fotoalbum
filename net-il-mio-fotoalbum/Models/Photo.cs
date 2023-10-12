@@ -12,7 +12,7 @@ namespace net_il_mio_fotoalbum.Models
         #region *** Table Columns ***
 
         [Column(name:"id"), Key]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [Column(name: "title", TypeName = "VARCHAR(100)"), Required(AllowEmptyStrings = false, ErrorMessage = "The title of the photo is required.")]
         public string? Title { get; set; }
@@ -29,12 +29,16 @@ namespace net_il_mio_fotoalbum.Models
         [Column(name:"visibility")]
         public bool Visibility { get; set; }
 
+        [Column(name: "user_id", TypeName = "NVARCHAR"), Required ]
+        public string? UserId { get; set; }
         #endregion
 
         #region *** Relations ***
         public List<Category>? Categories { get; set; }
+
         #endregion
 
+        #region *** Constructors ***
         public Photo () { }
 
         public Photo(string title, string description, string imgPath, bool visibility = false)
@@ -45,5 +49,7 @@ namespace net_il_mio_fotoalbum.Models
             ImgPath = imgPath;
             Visibility = visibility;
         }
+
+        #endregion
     }
 }
