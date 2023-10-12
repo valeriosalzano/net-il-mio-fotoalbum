@@ -29,7 +29,7 @@ namespace net_il_mio_fotoalbum.Models
         [Column(name:"visibility")]
         public bool Visibility { get; set; }
 
-        [Column(name: "user_id", TypeName = "NVARCHAR"), Required ]
+        [Column(name: "user_id", TypeName = "VARCHAR(450)"), Required ]
         public string? UserId { get; set; }
         #endregion
 

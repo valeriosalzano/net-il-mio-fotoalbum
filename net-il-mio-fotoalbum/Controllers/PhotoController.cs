@@ -12,22 +12,28 @@ using Microsoft.SqlServer.Server;
 
 namespace net_il_mio_fotoalbum.Controllers
 {
-    [Route("Admin")]
     [Authorize(Roles = "ADMIN,SUPERADMIN")]
     public class PhotoController : Controller
     {
         private readonly PhotoManager _photoManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IRepository<Category> _categoryManager;
-        public PhotoController(PhotoManager photoRepository, IRepository<Category> categoryRepository, UserManager<IdentityUser> userManager)
+        private readonly IWebHostEnvironment _hostEnvironment;
+        public PhotoController(
+            PhotoManager photoRepository, 
+            IRepository<Category> categoryRepository, 
+            UserManager<IdentityUser> userManager,
+            IWebHostEnvironment hostEnvironment
+            )
         {
             _photoManager = photoRepository;
             _userManager = userManager;
             _categoryManager = categoryRepository;
+            _hostEnvironment = hostEnvironment;
         }
 
         // GET: PhotoController
-        [HttpGet("Index")]
+        [HttpGet]
         public ActionResult Index()
         {
             try
@@ -102,13 +108,21 @@ namespace net_il_mio_fotoalbum.Controllers
                 }
 
                 ModelState.Clear();
-                PrepareForValidation(formData.Photo);
+                PrepareForValidation(formData);
                 if (!TryValidateModel(formData))
                 {
                     PrepareFormModel(formData);
                     return View(nameof(Create), formData);
                 }
-                
+
+                if(formData.ImgFile is not null)
+                {
+                    string fileName = formData.Photo.ImgPath!;
+                    string uploads = Path.Combine(_hostEnvironment.WebRootPath, "uploads");
+                    string filePath = Path.Combine(uploads, fileName);
+                    formData.ImgFile.CopyTo(new FileStream(filePath, FileMode.Create));
+                }
+
                 formData.Photo.Categories = new List<Category>();
                 if(formData.SelectedCategoriesId != null)
                 {
@@ -172,7 +186,7 @@ namespace net_il_mio_fotoalbum.Controllers
                 }
                 
                 ModelState.Clear();
-                PrepareForValidation(formData.Photo);
+                PrepareForValidation(formData);
                 if (!TryValidateModel(formData))
                 {
                     PrepareFormModel(formData);
@@ -234,9 +248,14 @@ namespace net_il_mio_fotoalbum.Controllers
             }
         }
 
-        private void PrepareForValidation(Photo photo)
+        private void PrepareForValidation(PhotoFormModel formData)
         {
-            photo.Slug = Helper.GetSlugFromString(photo.Title);
+            formData.Photo.Slug = Helper.GetSlugFromString(formData.Photo.Title);
+
+            if (formData.ImgFile is not null)
+            {
+                formData.Photo.ImgPath = GetUniqueFileName(formData.ImgFile.FileName);
+            }
         }
         private void PrepareFormModel(PhotoFormModel formData)
         {
@@ -248,6 +267,17 @@ namespace net_il_mio_fotoalbum.Controllers
                 selectCategories.Add(new SelectListItem { Text = category.Name, Value = category.Id.ToString() });
             }
             formData.Categories = selectCategories;
+        }
+
+        private string GetUniqueFileName(string fileName)
+        {
+
+            fileName = Path.GetFileName(fileName);
+            return Path.GetFileNameWithoutExtension(fileName)
+                        + "_"
+                        + Guid.NewGuid().ToString().Substring(0, 4)
+                        + Path.GetExtension(fileName);
+
         }
     }
 }

@@ -290,7 +290,7 @@ namespace net_il_mio_fotoalbum.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR")
+                        .HasColumnType("VARCHAR(450)")
                         .HasColumnName("user_id");
 
                     b.Property<bool>("Visibility")

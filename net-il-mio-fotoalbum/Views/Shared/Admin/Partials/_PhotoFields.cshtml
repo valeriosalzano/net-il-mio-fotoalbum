@@ -1,10 +1,19 @@
 ﻿@model PhotoFormModel
 
+<input type="hidden" asp-for="Photo.UserId">
+
 <div class="mb-3">
     <label asp-for="Photo.Title" class="form-label">Title *</label>
     <input type="text" class="form-control" asp-for="Photo.Title">
     <span class="invalid-feedback d-inline" asp-validation-for="Photo.Title"></span>
     <span class="invalid-feedback d-inline" asp-validation-for="Photo.Slug"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="ImgFile" class="form-label">Title *</label>
+    <input type="file" class="form-control" asp-for="ImgFile">
+    <span class="invalid-feedback d-inline" asp-validation-for="ImgFile"></span>
+
 </div>
 
 @if (Model.Categories is not null)
@@ -20,8 +29,4 @@
     <textarea class="form-control" asp-for="Photo.Description" rows="3" placeholder="Write a photo description..."></textarea>
     <span class="invalid-feedback d-inline" asp-validation-for="Photo.Description"></span>
 </div>
-<div class="mb-3">
-    <label asp-for="Photo.ImgPath" class="form-label">Image Path</label>
-    <input type="text" class="form-control" asp-for="Photo.ImgPath">
-    <span class="invalid-feedback d-inline" asp-validation-for="Photo.ImgPath"></span>
-</div>
+

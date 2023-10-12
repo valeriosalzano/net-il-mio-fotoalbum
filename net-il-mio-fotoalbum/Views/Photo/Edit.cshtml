@@ -4,7 +4,7 @@
 }
 @model PhotoFormModel
 
-<form asp-action="Edit" method="post">
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
 
     <input type="hidden" asp-for="Photo.Id">

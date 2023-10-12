@@ -12,7 +12,7 @@ using net_il_mio_fotoalbum.Database;
 namespace net_il_mio_fotoalbum.Migrations
 {
     [DbContext(typeof(PhotographerShowcaseContext))]
-    [Migration("20231011200900_create_photo_category_user_tables_with_relations")]
+    [Migration("20231012081805_create_photo_category_user_tables_with_relations")]
     partial class create_photo_category_user_tables_with_relations
     {
         /// <inheritdoc />
@@ -293,7 +293,7 @@ namespace net_il_mio_fotoalbum.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR")
+                        .HasColumnType("VARCHAR(450)")
                         .HasColumnName("user_id");
 
                     b.Property<bool>("Visibility")

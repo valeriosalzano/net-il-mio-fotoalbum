@@ -75,7 +75,7 @@ namespace net_il_mio_fotoalbum.Migrations
                     description = table.Column<string>(type: "VARCHAR(1000)", nullable: false),
                     img_path = table.Column<string>(type: "VARCHAR(1000)", nullable: false),
                     visibility = table.Column<bool>(type: "bit", nullable: false),
-                    user_id = table.Column<string>(type: "NVARCHAR", nullable: false)
+                    user_id = table.Column<string>(type: "VARCHAR(450)", nullable: false)
                 },
                 constraints: table =>
                 {
