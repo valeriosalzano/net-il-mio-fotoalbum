@@ -31,26 +31,27 @@
                 {
                     <tr class="sweet-delete-target-wrapper">
                         <th scope="row">@photo.Id</th>
-                        <td class="d-none d-sm-table-cell"><img class="w-100 rounded-2 model-img" src="@photo.ImgPath" alt="" loading="lazy"></td>
+                        <td class="d-none d-sm-table-cell"><img class="w-100 rounded-2 card-img" src="/uploads/@photo.ImgPath" alt="" loading="lazy"></td>
                         <td class="sweet-delete-target-title">@photo.Title</td>
                         <td class="d-none d-md-table-cell">@photo.Description</td>
                         <td>
                             <div class="d-flex flex-column">
+
                                 <a href="@Url.Action("Details","Photo", new {slug = photo.Slug})" class="btn btn-outline-info mb-2">
                                     <i class="fa-solid fa-eye"></i>
                                 </a>
-                                @if (User.IsInRole("SUPERADMIN"))
-                                {
-                                    <a href="@Url.Action("Edit","Photo", new {slug = photo.Slug})" class="btn btn-outline-warning mb-2">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </a>
-                                    <form asp-action="Delete" asp-route-slug="@photo.Slug" method="post">
-                                        @Html.AntiForgeryToken()
-                                        <button type="submit" class="btn btn-outline-danger btn-sweet-delete w-100">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
-                                    </form>
-                                }
+ 
+                                <a href="@Url.Action("Edit","Photo", new {slug = photo.Slug})" class="btn btn-outline-warning mb-2">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+
+                                <form asp-action="Delete" asp-route-slug="@photo.Slug" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-outline-danger btn-sweet-delete w-100">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+
                             </div>
                         </td>
                     </tr>  

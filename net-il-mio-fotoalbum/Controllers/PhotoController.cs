@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication;
 using net_il_mio_fotoalbum.Utility;
 using Microsoft.SqlServer.Server;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace net_il_mio_fotoalbum.Controllers
 {
@@ -52,18 +53,23 @@ namespace net_il_mio_fotoalbum.Controllers
         }
 
         // GET: PhotoController/Details/photo-slug
-        public ActionResult Details(string slug)
+        public async Task<IActionResult> Details(string slug)
         {
             try
             {
                 Photo? photo = _photoManager.GetBySlug(slug);
+                
 
                 if (photo is null)
                 {
                     return NotFound("Can't find the photo.");
                 }
                 if (photo.UserId == _userManager.GetUserId(User) || User.IsInRole("SUPERADMIN"))
-                    return View("Details", photo);
+                {
+                    IdentityUser? user = await _userManager.FindByIdAsync(photo.UserId!);
+                    PhotoFormModel formModel = new PhotoFormModel { Photo = photo, UserName = user!.UserName };
+                    return View("Details", formModel);
+                }
                 else
                     return Unauthorized();
 
@@ -120,7 +126,10 @@ namespace net_il_mio_fotoalbum.Controllers
                     string fileName = formData.Photo.ImgPath!;
                     string uploads = Path.Combine(_hostEnvironment.WebRootPath, "uploads");
                     string filePath = Path.Combine(uploads, fileName);
-                    formData.ImgFile.CopyTo(new FileStream(filePath, FileMode.Create));
+                    using (FileStream newFileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        formData.ImgFile.CopyTo(newFileStream);
+                    }
                 }
 
                 formData.Photo.Categories = new List<Category>();
@@ -186,6 +195,7 @@ namespace net_il_mio_fotoalbum.Controllers
                 }
                 
                 ModelState.Clear();
+                string originalFile = formData.Photo.ImgPath!;
                 PrepareForValidation(formData);
                 if (!TryValidateModel(formData))
                 {
@@ -196,6 +206,19 @@ namespace net_il_mio_fotoalbum.Controllers
                 Photo originalPhoto = _photoManager.GetBySlug(slug)!;
 
                 originalPhoto.Categories!.Clear();
+
+                if (formData.ImgFile is not null)
+                {
+                    string fileName = formData.Photo.ImgPath!;
+                    string uploads = Path.Combine(_hostEnvironment.WebRootPath, "uploads");
+                    string filePath = Path.Combine(uploads, fileName);
+                    using (FileStream newFileStream = new FileStream(filePath, FileMode.Create)){
+                        formData.ImgFile.CopyTo(newFileStream);
+                    }
+                    string oldFilePath = Path.Combine(uploads, originalFile);
+                    if (System.IO.File.Exists(oldFilePath))
+                        System.IO.File.Delete(oldFilePath);
+                }
 
                 if (formData.SelectedCategoriesId != null)
                 {
@@ -211,6 +234,7 @@ namespace net_il_mio_fotoalbum.Controllers
                 originalPhoto.Slug = formData.Photo.Slug;
                 originalPhoto.Description = formData.Photo.Description;
                 originalPhoto.Visibility = formData.Photo.Visibility;
+                originalPhoto.ImgPath = formData.Photo.ImgPath;
 
                 _photoManager.Update(originalPhoto);
 
@@ -240,6 +264,11 @@ namespace net_il_mio_fotoalbum.Controllers
                     return Unauthorized();
                 }
                 _photoManager.Delete(markedPhoto);
+                string fileName = markedPhoto.ImgPath!;
+                string uploads = Path.Combine(_hostEnvironment.WebRootPath, "uploads");
+                string filePath = Path.Combine(uploads, fileName);
+                System.IO.File.Delete(filePath);
+
                 return RedirectToAction(nameof(Index));
             }
             catch

@@ -8,7 +8,8 @@
     @Html.AntiForgeryToken()
 
     <input type="hidden" asp-for="Photo.Id">
-    <partial name="Admin/Partials/_PizzaFields" model="Model"/>
+    <input type="hidden" asp-for="Photo.ImgPath">
+    <partial name="Admin/Partials/_PhotoFields" model="Model"/>
 
     <div class="text-center">
         <button class="btn btn-primary px-3 w-100" type="submit">Submit</button>

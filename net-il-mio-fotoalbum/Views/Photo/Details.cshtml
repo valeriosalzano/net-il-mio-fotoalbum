@@ -3,42 +3,42 @@
     ViewData["Title"] = $"Photo Details";
 }
 
-@model Photo;
+@model PhotoFormModel;
 
 <div class="container-fluid py-3">
     <div class="card wrapper shadow position-relative overflow-hidden">
-        <img src="/uploads/@Model.ImgPath" class="card-img details-img-top card-img-top position-absolute ratio ratio-1x1" alt="ceci n'est past une photo">
+        <img src="/uploads/@Model.Photo.ImgPath" class="card-img details-img-top card-img-top position-absolute ratio ratio-1x1" alt="ceci n'est past une photo">
       <div class="card-body details-card">
-        <h5 class="sweet-delete-title card-title display-5 ps-2">@Model.Title</h5>
-        <p class="card-text fs-4 ps-3">@Model.Description</p>
+        <h5 class="sweet-delete-title card-title display-5 ps-2">@Model.Photo.Title</h5>
+        <p class="card-text fs-4 ps-3">@Model.Photo.Description</p>
         <ul class="list-group list-group-flush details-list">
-                <li class="list-group-item bg-transparent"> <span class="fs-6 fw-bold">User Id: </span>@Model.UserId</li>
-                <li class="list-group-item bg-transparent">
-                    <span class="fs-6 fw-bold">Categories: </span>
-            @if (Model.Categories is not null && Model.Categories.Count > 0)
-            {
-                @foreach(Category category in Model.Categories)
+            <li class="list-group-item bg-transparent"> <span class="fs-6 fw-bold">User Name: </span>@Model.UserName</li>
+            <li class="list-group-item bg-transparent">
+                <span class="fs-6 fw-bold">Categories: </span>
+                @if (Model.Photo.Categories is not null && Model.Photo.Categories.Count > 0)
                 {
-                        <span class="badge rounded-pill bg-secondary">@category.Name</span>
+                    @foreach(Category category in Model.Photo.Categories)
+                    {
+                            <span class="badge rounded-pill bg-secondary">@category.Name</span>
+                    }
                 }
-            }
-            else
-            {
-                <span>No categorys found.</span>
-            }
-        </li>
-                <li class="list-group-item bg-transparent"><span class="fs-6 fw-bold">Image Path: </span>@Model.ImgPath</li>
-                <li class="list-group-item bg-transparent"><span class="fs-6 fw-bold">Slug: </span>@Model.Slug</li>
+                else
+                {
+                    <span>No categorys found.</span>
+                }
+            </li>
+            <li class="list-group-item bg-transparent"><span class="fs-6 fw-bold">Image Path: </span>@Model.Photo.ImgPath</li>
+            <li class="list-group-item bg-transparent"><span class="fs-6 fw-bold">Slug: </span>@Model.Photo.Slug</li>
         </ul>
         <div class="d-flex justify-content-center">
 
             <a class="btn btn-primary me-2" href="@Url.Action("Index","Photo")">Return to List</a>
 
-            <a href="@Url.Action("Edit","Pizza", new {slug = Model.Slug})" class="btn btn-warning px-2 me-2">
+            <a href="@Url.Action("Edit","Photo", new {slug = Model.Photo.Slug})" class="btn btn-warning px-2 me-2">
                 Modify <i class="fa-solid fa-pen-to-square"></i>
             </a>
 
-            <form asp-action="Delete" asp-route-slug="@Model.Slug" method="post">
+            <form asp-action="Delete" asp-route-slug="@Model.Photo.Slug" method="post">
                 @Html.AntiForgeryToken()
                 <button type="submit" class="btn btn-danger btn-sweet-delete px-2 me-2">
                     Delete <i class="fa-solid fa-trash"></i>
