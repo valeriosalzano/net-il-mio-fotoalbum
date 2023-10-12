@@ -29,6 +29,7 @@ namespace net_il_mio_fotoalbum
             builder.Services.AddScoped<PhotoManager, PhotoManager>();
             builder.Services.AddScoped<IRepository<Category>, EntityRepository<Category>>();
             builder.Services.AddScoped<UserManager<IdentityUser>, UserManager<IdentityUser>>();
+            builder.Services.AddScoped<IRepository<Message>, EntityRepository<Message>>();
 
             var app = builder.Build();
 

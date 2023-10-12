@@ -18,3 +18,7 @@ header .nav-link {
     text-transform: uppercase;
 }
 
+.photo-img {
+    object-fit:cover;
+    height: 500px;
+}

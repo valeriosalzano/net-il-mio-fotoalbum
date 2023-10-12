@@ -50,7 +50,7 @@ namespace net_il_mio_fotoalbum.Database
                 return base._dbSet.Where(photo => photo.Slug == slug).First();
         }
 
-        public IEnumerable<Photo> GetFilteredList(Func<Photo, bool> filter, bool includeEverything = true)
+        public IEnumerable<Photo> GetAllFiltered(Func<Photo, bool> filter, bool includeEverything = true)
         {
             if (includeEverything)
                 return _dbSet

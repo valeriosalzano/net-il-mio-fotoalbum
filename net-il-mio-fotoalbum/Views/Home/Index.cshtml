@@ -3,8 +3,64 @@
     ViewData["Title"] = "Home Page";
 }
 
-<h1 class="text-center">@ViewData["Title"]</h1>
+<section id="our-photos">
+	<div class="container py-3">
+		<h1 class="display-3 text-center my-3">Our <span class="highlighted-word">awesome</span> photos</h1>
+
+		<div id="our-photos-data">
+			<div class="loader text-center">
+				<span class="spinner-border" role="status"></span>
+				<p>Looking for amazing photos...</p>
+			</div>
+			<div class="empty-data-list d-none text-center">
+				<p class="fs-4">No photos found! <span class="fs-2 fw-bold"> :( </span></p>
+			</div>
+			<div class="data-list row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 d-none">
+			</div>
+		</div>
+	</div>
+</section>
+
+<section id="search-photos">
+	<div class="container py-3">
+		<h2 class="display-3 text-center my-3"> Missing your favourite? <span class="highlighted-word">search</span> it!</h2>
+		<div class="input-group mb-3">
+			<span class="input-group-text" id="photoSearch">Search Photo</span>
+			<input id="photoSearchInput" type="text" class="form-control" placeholder="write your favourite photo title..." aria-label="photoSearchbar" aria-describedby="photoSearch">
+		</div>
+		<div id="search-photos-data">
+			<div class="loader text-center d-none">
+				<span class="spinner-border" role="status"></span>
+				<p>Looking for inspirational photos...</p>
+			</div>
+			<div class="empty-data-list d-none text-center">
+				<p class="fs-4">No photos found! <span class="fs-2 fw-bold"> :( </span></p>
+			</div>
+			<div class="data-list row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 d-none">
+			</div>
+		</div>
+	</div>
+</section>
+
+<section id="contact-us">
+	<form method="post">
+		<div class="container py-3">
+			<h2 class="display-3 text-center my-3"> Leave a <span class="highlighted-word">message</span></h2>
+			<div class="mb-3">
+				<label for="email" class="form-label">Email</label>
+				<input type="email" class="form-control" id="email" placeholder="name@example.com">
+				<small id="mail-alert" class="invalid-feedback d-none">Please, select a valid email.</small>
+			</div>
+			<div class="mb-3">
+				<label for="message" class="form-label">Your message</label>
+				<textarea class="form-control" id="message" rows="3"></textarea>
+				<small id="message-alert" class="invalid-feedback d-none"> Please, enter a message (minimum length: 10 words)</small>
+			</div>
+			<button type="submit" id="send-msg-btn" class="btn btn-primary">Send message</button>
+		</div>
+	</form>
+</section>
 
 @section Scripts {
-
+	<script src="~/js/home.js" asp-append-version="true"></script>
 }
