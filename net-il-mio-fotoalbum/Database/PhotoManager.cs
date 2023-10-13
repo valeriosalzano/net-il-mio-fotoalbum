@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore;
 using net_il_mio_fotoalbum.Models;
+using System.Linq.Expressions;
 
 namespace net_il_mio_fotoalbum.Database
 {
@@ -50,7 +51,7 @@ namespace net_il_mio_fotoalbum.Database
                 return base._dbSet.Where(photo => photo.Slug == slug).First();
         }
 
-        public IEnumerable<Photo> GetAllFiltered(Func<Photo, bool> filter, bool includeEverything = true)
+        public IEnumerable<Photo> GetAllFiltered(Expression<Func<Photo, bool>> filter, bool includeEverything = true)
         {
             if (includeEverything)
                 return _dbSet

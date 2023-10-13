@@ -7,7 +7,7 @@
 	<div class="container py-3">
 		<h1 class="display-3 text-center my-3">Our <span class="highlighted-word">awesome</span> photos</h1>
 
-		<div id="our-photos-data">
+		<div id="our-photos-data" class="position-relative">
 			<div class="loader text-center">
 				<span class="spinner-border" role="status"></span>
 				<p>Looking for amazing photos...</p>
@@ -28,7 +28,7 @@
 			<span class="input-group-text" id="photoSearch">Search Photo</span>
 			<input id="photoSearchInput" type="text" class="form-control" placeholder="write your favourite photo title..." aria-label="photoSearchbar" aria-describedby="photoSearch">
 		</div>
-		<div id="search-photos-data">
+		<div id="search-photos-data" class="position-relative">
 			<div class="loader text-center d-none">
 				<span class="spinner-border" role="status"></span>
 				<p>Looking for inspirational photos...</p>
@@ -43,22 +43,24 @@
 </section>
 
 <section id="contact-us">
-	<form method="post">
-		<div class="container py-3">
-			<h2 class="display-3 text-center my-3"> Leave a <span class="highlighted-word">message</span></h2>
+	<div class="container py-3">
+		<h2 class="display-3 text-center my-3"> Leave a <span class="highlighted-word">message</span></h2>
+		<form method="post">
+			<div class="d-none alert alert-success" role="alert">Your message was sent!</div>
 			<div class="mb-3">
 				<label for="email" class="form-label">Email</label>
 				<input type="email" class="form-control" id="email" placeholder="name@example.com">
-				<small id="mail-alert" class="text-danger d-none"> Please, select a valid email. <span class="errors"></span></small>
 			</div>
+			<div id="mail-alert" class="alert alert-danger d-none" role="alert"> Please, select a valid email. <span class="errors"></span></div>
+
 			<div class="mb-3">
 				<label for="message" class="form-label">Your message</label>
 				<textarea class="form-control" id="message" rows="3"></textarea>
-				<small id="message-alert" class="text-danger d-none"> Please, enter a message. <span class="errors"></span></small>
 			</div>
-			<button type="submit" id="send-msg-btn" class="btn btn-primary">Send message</button>
-		</div>
-	</form>
+			<div id="message-alert" class="alert alert-danger d-none" role="alert"> Please, enter a message. <span class="errors"></span></div>
+			<button type="submit" id="send-msg-btn" class="btn btn-outline-primary w-100">Send message</button>
+		</form>
+	</div>
 </section>
 
 @section Scripts {

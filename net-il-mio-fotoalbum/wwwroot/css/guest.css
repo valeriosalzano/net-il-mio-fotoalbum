@@ -22,3 +22,15 @@ header .nav-link {
     object-fit:cover;
     height: 500px;
 }
+
+.loader{
+    padding-top: 50px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 300px;
+    height: 100%;
+    background-color: white;
+    z-index: 9;
+}

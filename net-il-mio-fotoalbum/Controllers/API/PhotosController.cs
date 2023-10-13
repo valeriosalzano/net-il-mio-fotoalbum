@@ -26,9 +26,7 @@ namespace net_il_mio_fotoalbum.Controllers.API
 		[HttpGet]
 		public IActionResult GetAllContaining(string? name)
 		{
-			List<Photo> foundPhotos = _photoManager.GetAllContaining(name, true);
-
-			foundPhotos = foundPhotos.Where(photo => photo.Visibility == true).ToList();
+			List<Photo> foundPhotos = _photoManager.GetAllContaining(name, true).Where(photo => photo.Visibility == true).ToList();
 
 			return Ok(foundPhotos);
 		}

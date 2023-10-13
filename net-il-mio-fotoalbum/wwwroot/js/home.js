@@ -86,7 +86,7 @@ function generatePhotoCardDOM(photo) {
 				<p class="card-text">${photo.description}</p>
 			</div>
 			<div class="card-footer">
-				<small class="text-body-secondary"> Categories: ${categories.Length > 0 ? categories.join(", ") : "no categories found"}</small>
+				<small class="text-body-secondary"> Categories: ${categories.length > 0 ? categories.join(", ") : "no categories found"}</small>
 			</div>
 		</div>
 	</div>
@@ -95,12 +95,14 @@ function generatePhotoCardDOM(photo) {
 
 function sendMessage() {
 	// SETUP
+	const successAlertDOM = contactUsSectionDOM.querySelector(".alert-success");
 	const emailAlertDOM = contactUsSectionDOM.querySelector("#mail-alert");
 	const bodyAlertDOM = contactUsSectionDOM.querySelector("#message-alert");
 	const emailDOM = document.getElementById("email");
 	const bodyDOM = document.getElementById("message");
 
 	// LOGIC
+	successAlertDOM.classList.add("d-none");
 	sendMsgBtnDOM.classList.add("disabled");
 	sendMsgBtnDOM.innerHTML = "Sending..."
 	let email = emailDOM.value.trim();
@@ -112,13 +114,17 @@ function sendMessage() {
 			.then(() => {
 				emailDOM.value = "";
 				bodyDOM.value = "";
-				
+				successAlertDOM.classList.remove("d-none");
 			}).catch(err => {
 				printServerErrors(err.response.data.errors);
+			}).finally(() => {
+				sendMsgBtnDOM.innerHTML = "Send message";
+				sendMsgBtnDOM.classList.remove("disabled");
 			});
+	} else {
+		sendMsgBtnDOM.innerHTML = "Send message";
+		sendMsgBtnDOM.classList.remove("disabled");
 	}
-	sendMsgBtnDOM.innerHTML = "Send message";
-	sendMsgBtnDOM.classList.remove("disabled");
 
 	// BASIC FIELDS CHECK
 	function fieldsCheckPassed() {
