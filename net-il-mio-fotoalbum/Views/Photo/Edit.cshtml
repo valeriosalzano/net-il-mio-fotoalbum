@@ -4,6 +4,9 @@
 }
 @model PhotoFormModel
 
+<div class="text-end">
+    <a class="btn btn-primary me-2" asp-action="Index">Return to List</a>
+</div>
 <div class="border rounded-2 p-3 my-3 bg-white shadow">
     <form asp-action="Edit" method="post" enctype="multipart/form-data">
         @Html.AntiForgeryToken()

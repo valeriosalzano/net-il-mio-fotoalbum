@@ -9,17 +9,18 @@
     <a class="btn btn-primary px-3" asp-action="create">Add a Photo</a>
 </div>
 
-<div class="border rounded-2 p-3 my-3 bg-white shadow">
+<div class="border rounded-2 py-3 my-3 bg-white shadow">
     @if(Model.Count() == 0)
     {
         <p>No photo found, add one!</p>
     }
     else
     {
-        <table class="table">
+        <table class="table table-striped">
             <thead>
-                <tr>
+                <tr class="text-center">
                     <th scope="col">ID</th>
+                    <th scope="col">Status</th>
                     <th scope="col" class="d-none d-sm-table-cell">Image</th>
                     <th scope="col">Name</th>
                     <th scope="col" class="d-none d-md-table-cell">Description</th>
@@ -29,9 +30,18 @@
             <tbody>
                 @foreach(Photo photo in Model)
                 {
-                    <tr class="sweet-delete-target-wrapper">
-                        <th scope="row">@photo.Id</th>
-                        <td class="d-none d-sm-table-cell"><img class="w-100 rounded-2 card-img" src="/uploads/@photo.ImgPath" alt="" loading="lazy"></td>
+                    <tr class="sweet-delete-target-wrapper text-center">
+                        <th scope="row" class="fs-5">@photo.Id</th>
+                        <td class="pt-5">
+                            @if (photo.Visibility)
+                            {
+                                <i class="fa-regular fa-eye fs-4"></i>
+                            }else
+                            {
+                                <i class="fa-solid fa-eye-slash fs-4"></i>
+                            }
+                        </td>
+                        <td class="d-none d-sm-table-cell"><img class="w-100 rounded-2 card-img align-middle" src="/uploads/@photo.ImgPath" alt="" loading="lazy"></td>
                         <td class="sweet-delete-target-title">@photo.Title</td>
                         <td class="d-none d-md-table-cell">@photo.Description</td>
                         <td>

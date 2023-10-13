@@ -12,6 +12,7 @@ header .navbar {
 }
 main {
     height: calc(100vh - 155px);
+    overflow:hidden;
 }
 .content{
     max-height: 100%;

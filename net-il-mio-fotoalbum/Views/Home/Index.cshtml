@@ -49,12 +49,12 @@
 			<div class="mb-3">
 				<label for="email" class="form-label">Email</label>
 				<input type="email" class="form-control" id="email" placeholder="name@example.com">
-				<small id="mail-alert" class="invalid-feedback d-none">Please, select a valid email.</small>
+				<small id="mail-alert" class="text-danger d-none"> Please, select a valid email. <span class="errors"></span></small>
 			</div>
 			<div class="mb-3">
 				<label for="message" class="form-label">Your message</label>
 				<textarea class="form-control" id="message" rows="3"></textarea>
-				<small id="message-alert" class="invalid-feedback d-none"> Please, enter a message (minimum length: 10 words)</small>
+				<small id="message-alert" class="text-danger d-none"> Please, enter a message. <span class="errors"></span></small>
 			</div>
 			<button type="submit" id="send-msg-btn" class="btn btn-primary">Send message</button>
 		</div>

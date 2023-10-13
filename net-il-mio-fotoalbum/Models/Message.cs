@@ -8,7 +8,7 @@ namespace net_il_mio_fotoalbum.Models
 	public class Message
 	{
 		[Key, Column(name: "id")]
-		public long Id { get; set; }
+		public int Id { get; set; }
 
 		[Column(name: "email"), Required(AllowEmptyStrings = false), EmailAddress]
 		public string? Email { get; set; }

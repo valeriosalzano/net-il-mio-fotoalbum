@@ -44,7 +44,7 @@ namespace net_il_mio_fotoalbum.Controllers
                     photos = (List<Photo>) _photoManager.GetAll();
                 else if (User.IsInRole("ADMIN"))
                     photos = (List<Photo>) _photoManager.GetAllFiltered(photo => photo.UserId == _userManager.GetUserId(User));
-                return View("Index", photos);
+                return View(photos);
             }
             catch
             {
@@ -67,8 +67,8 @@ namespace net_il_mio_fotoalbum.Controllers
                 if (photo.UserId == _userManager.GetUserId(User) || User.IsInRole("SUPERADMIN"))
                 {
                     IdentityUser? user = await _userManager.FindByIdAsync(photo.UserId!);
-                    PhotoFormModel formModel = new PhotoFormModel { Photo = photo, UserName = user!.UserName };
-                    return View("Details", formModel);
+                    PhotoFormModel formModel = new PhotoFormModel { Photo = photo, UserName = user?.UserName ?? "unknown" };
+                    return View(formModel);
                 }
                 else
                     return Unauthorized();
@@ -93,7 +93,7 @@ namespace net_il_mio_fotoalbum.Controllers
                 formModel.Photo.UserId = _userManager.GetUserId(User);
                 PrepareFormModel( formModel );
 
-                return View("Create", formModel);
+                return View(formModel);
             }
             catch
             {

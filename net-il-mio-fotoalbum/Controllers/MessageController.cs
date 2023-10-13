@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using net_il_mio_fotoalbum.Database;
 using net_il_mio_fotoalbum.Models;
 
 namespace net_il_mio_fotoalbum.Controllers
 {
-	public class MessageController : Controller
+    [Authorize(Roles = "SUPERADMIN")]
+    public class MessageController : Controller
 	{
 		private IRepository<Message> _messageManager;
 
@@ -15,7 +17,17 @@ namespace net_il_mio_fotoalbum.Controllers
 		public IActionResult Index()
 		{
 			List<Message> messages = (List<Message>)_messageManager.GetAll();
-			return View("Index",messages);
+			return View(messages);
 		}
-	}
+
+        public IActionResult Details(int? id)
+        {
+			if (id is null)
+				return NotFound();
+			Message? message = _messageManager.GetById((int)id);
+			if (message is null)
+				return NotFound();
+            return View(message);
+        }
+    }
 }

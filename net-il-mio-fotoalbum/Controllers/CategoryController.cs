@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,154 +11,129 @@ using net_il_mio_fotoalbum.Models;
 
 namespace net_il_mio_fotoalbum.Controllers
 {
+    [Authorize(Roles = "ADMIN,SUPERADMIN")]
     public class CategoryController : Controller
     {
-        private readonly PhotographerShowcaseContext _context;
+        private readonly IRepository<Category> _categoryManager;
 
-        public CategoryController(PhotographerShowcaseContext context)
+        public CategoryController(IRepository<Category> categoryManager)
         {
-            _context = context;
+            _categoryManager = categoryManager;
         }
 
-        // GET: Categories
-        public async Task<IActionResult> Index()
+        // GET: Category
+        public IActionResult Index()
         {
-              return _context.Categories != null ? 
-                          View(await _context.Categories.ToListAsync()) :
-                          Problem("Entity set 'PhotographerShowcaseContext.Categories'  is null.");
+			try
+			{
+				List<Category> categories = (List<Category>)_categoryManager.GetAll();
+
+				return View(categories);
+			}
+			catch
+			{
+				return Problem("Something went wrong.");
+			}
         }
 
-        // GET: Categories/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: Category/Details/5
+        public IActionResult Details(int? id)
         {
-            if (id == null || _context.Categories == null)
-            {
+            if (id is null)
                 return NotFound();
-            }
 
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
+			Category? category = _categoryManager.GetById((int)id);
 
-            return View(category);
+			if (category is null)
+				return NotFound();
+
+			return View(category);
         }
 
-        // GET: Categories/Create
+        // GET: Category/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Categories/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Category/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description")] Category category)
+        public IActionResult Create([Bind("Id,Name,Description")] Category category)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(category);
-                await _context.SaveChangesAsync();
+                _categoryManager.Add(category);
                 return RedirectToAction(nameof(Index));
             }
             return View(category);
         }
 
-        // GET: Categories/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // GET: Category/Edit/5
+        public IActionResult Edit(int? id)
         {
-            if (id == null || _context.Categories == null)
-            {
+            if (id == null)
                 return NotFound();
-            }
 
-            var category = await _context.Categories.FindAsync(id);
+            Category? category = _categoryManager.GetById((int) id);
+
             if (category == null)
-            {
                 return NotFound();
-            }
+
             return View(category);
         }
 
-        // POST: Categories/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Category/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Category category)
+        public IActionResult Edit(int id, [Bind("Id,Name,Description")] Category category)
         {
             if (id != category.Id)
-            {
                 return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
+                Category? originalCategory = _categoryManager.GetById(category.Id);
+                if (originalCategory is null)
+                    return NotFound();
                 try
                 {
-                    _context.Update(category);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
+                    originalCategory.Name = category.Name;
+                    originalCategory.Description = category.Description;
+                    _categoryManager.Update(originalCategory);
+					return RedirectToAction(nameof(Index));
+				}
+                catch
                 {
-                    if (!CategoryExists(category.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+					return Problem("Something went wrong.");
+				}
             }
             return View(category);
         }
 
-        // GET: Categories/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+		// POST: Category/Delete/5
+		[HttpPost, ActionName("Delete")]
+		[ValidateAntiForgeryToken]
+		public IActionResult Delete(int? id)
         {
-            if (id == null || _context.Categories == null)
-            {
+            if (id == null)
                 return NotFound();
-            }
 
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
+            Category? category = _categoryManager.GetById((int)id);
+
             if (category == null)
-            {
                 return NotFound();
-            }
 
-            return View(category);
-        }
-
-        // POST: Categories/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Categories == null)
+            try
             {
-                return Problem("Entity set 'PhotographerShowcaseContext.Categories'  is null.");
-            }
-            var category = await _context.Categories.FindAsync(id);
-            if (category != null)
+                _categoryManager.Delete(category);
+				return RedirectToAction(nameof(Index));
+			}
+            catch
             {
-                _context.Categories.Remove(category);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool CategoryExists(int id)
-        {
-          return (_context.Categories?.Any(e => e.Id == id)).GetValueOrDefault();
+				return Problem("Something went wrong.");
+			}
+           
         }
     }
 }

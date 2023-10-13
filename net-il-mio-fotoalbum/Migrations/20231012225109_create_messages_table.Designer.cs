@@ -12,7 +12,7 @@ using net_il_mio_fotoalbum.Database;
 namespace net_il_mio_fotoalbum.Migrations
 {
     [DbContext(typeof(PhotographerShowcaseContext))]
-    [Migration("20231012141522_create_messages_table")]
+    [Migration("20231012225109_create_messages_table")]
     partial class create_messages_table
     {
         /// <inheritdoc />
@@ -264,12 +264,12 @@ namespace net_il_mio_fotoalbum.Migrations
 
             modelBuilder.Entity("net_il_mio_fotoalbum.Models.Message", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasColumnName("id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Body")
                         .IsRequired()

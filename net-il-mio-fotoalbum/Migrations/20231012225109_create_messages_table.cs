@@ -14,7 +14,7 @@ namespace net_il_mio_fotoalbum.Migrations
                 name: "messages",
                 columns: table => new
                 {
-                    id = table.Column<long>(type: "bigint", nullable: false)
+                    id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     body = table.Column<string>(type: "VARCHAR(2000)", nullable: false)

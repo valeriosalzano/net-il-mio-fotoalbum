@@ -29,8 +29,10 @@
     <textarea class="form-control" asp-for="Photo.Description" rows="3" placeholder="Write a photo description..."></textarea>
     <span class="invalid-feedback d-inline" asp-validation-for="Photo.Description"></span>
 </div>
-
-<div class="mb-3">
-    <label asp-for="Photo.Visibility" class="form-check-label">Visibility: </label>
-    <input class="form-check-input" type="checkbox" asp-for="Photo.Visibility" checked="@Model.Photo.Visibility">
-</div>
+@if(User.IsInRole("SUPERADMIN"))
+{
+    <div class="mb-3">
+        <label asp-for="Photo.Visibility" class="form-check-label">Visibility: </label>
+        <input class="form-check-input" type="checkbox" asp-for="Photo.Visibility" checked="@Model.Photo.Visibility">
+    </div>
+}

@@ -5,16 +5,16 @@
 
 @model List<Message>
 
-<div class="border rounded-2 p-3 my-3 bg-white shadow">
+<div class="border rounded-2 py-3 my-3 bg-white shadow">
     @if(Model.Count() == 0)
     {
         <p>Your inbox is empty!</p>
     }
     else
     {
-        <table class="table">
+        <table class="table table-striped">
             <thead>
-                <tr>
+                <tr class="text-center">
                     <th scope="col">ID</th>
                     <th scope="col">Email</th>
                     <th scope="col" class="d-none d-md-table-cell">Body</th>
@@ -24,14 +24,14 @@
             <tbody>
                 @foreach(Message message in Model)
                 {
-                    <tr class="sweet-delete-target-wrapper">
+                    <tr class="sweet-delete-target-wrapper text-center">
                         <th scope="row" class="sweet-delete-target-title">@message.Id</th>
                         <td>@message.Email</td>
                         <td class="d-none d-md-table-cell">@message.Body</td>
                         <td>
                             <div class="d-flex flex-row">
 
-                                <a href="@Url.Action("Details","Category", new {id = message.Id})" class="btn btn-outline-info me-2">
+                                <a href="@Url.Action("Details","Message", new {id = message.Id})" class="btn btn-outline-info me-2">
                                     <i class="fa-solid fa-eye"></i>
                                 </a>
 

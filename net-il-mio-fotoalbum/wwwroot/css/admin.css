@@ -46,4 +46,5 @@
 /* MODAL */
 #modal-sweet-delete {
     background-color: #00000075;
+    z-index: 9999;
 }
