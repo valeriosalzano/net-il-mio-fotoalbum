@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication;
 using net_il_mio_fotoalbum.Utility;
 using Microsoft.SqlServer.Server;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using Azure;
 
 namespace net_il_mio_fotoalbum.Controllers
 {
@@ -158,7 +159,7 @@ namespace net_il_mio_fotoalbum.Controllers
         {
             try
             {
-                Photo? photo = _photoManager.GetBySlug(slug);
+                Photo? photo = _photoManager.GetBySlug(slug,true);
 
                 if (photo is null)
                 {
@@ -291,9 +292,28 @@ namespace net_il_mio_fotoalbum.Controllers
             // CATEGORIES LIST
             List<SelectListItem> selectCategories = new List<SelectListItem>();
             List<Category> categories = (List<Category>) _categoryManager.GetAll();
-            foreach (Category category in categories)
+            if (formData.Photo.Categories is null)
             {
-                selectCategories.Add(new SelectListItem { Text = category.Name, Value = category.Id.ToString() });
+                foreach (Category category in categories)
+                {
+                    selectCategories.Add(new SelectListItem
+                    {
+                        Text = category.Name,
+                        Value = category.Id.ToString(),
+                    });
+                }
+            }
+            else
+            {
+                foreach (Category category in categories)
+                {
+                    selectCategories.Add(new SelectListItem
+                    {
+                        Text = category.Name,
+                        Value = category.Id.ToString(),
+                        Selected = formData.Photo.Categories.Any(selectedCategory => selectedCategory.Id == category.Id)
+                    });
+                }
             }
             formData.Categories = selectCategories;
         }

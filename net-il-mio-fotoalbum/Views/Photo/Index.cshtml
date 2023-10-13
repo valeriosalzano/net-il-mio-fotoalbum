@@ -5,14 +5,15 @@
 
 @model List<Photo>
 
-<div class="text-end my-2">
-    <a class="btn btn-primary px-3" asp-action="create">Add a Photo</a>
+<div class="text-end mb-2">
+    <a class="btn btn-primary px-3 mb-2" asp-action="create">Add a Photo</a>
+    <input type="text" class="p-1" id="filter-input" placeholder="Filter results by Title" />
 </div>
 
 <div class="border rounded-2 py-3 my-3 bg-white shadow">
     @if(Model.Count() == 0)
     {
-        <p>No photo found, add one!</p>
+        <p class="text-center p-3 display-4">No photo found, add one!</p>
     }
     else
     {
@@ -22,7 +23,7 @@
                     <th scope="col">ID</th>
                     <th scope="col">Status</th>
                     <th scope="col" class="d-none d-sm-table-cell">Image</th>
-                    <th scope="col">Name</th>
+                    <th scope="col">Title</th>
                     <th scope="col" class="d-none d-md-table-cell">Description</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -30,7 +31,7 @@
             <tbody>
                 @foreach(Photo photo in Model)
                 {
-                    <tr class="sweet-delete-target-wrapper text-center">
+                    <tr class="sweet-delete-target-wrapper filter-wrapper text-center">
                         <th scope="row" class="fs-5">@photo.Id</th>
                         <td class="pt-5">
                             @if (photo.Visibility)
@@ -42,7 +43,7 @@
                             }
                         </td>
                         <td class="d-none d-sm-table-cell"><img class="w-100 rounded-2 card-img align-middle" src="/uploads/@photo.ImgPath" alt="" loading="lazy"></td>
-                        <td class="sweet-delete-target-title">@photo.Title</td>
+                        <td class="sweet-delete-target-title filter-title">@photo.Title</td>
                         <td class="d-none d-md-table-cell">@photo.Description</td>
                         <td>
                             <div class="d-flex flex-column">
@@ -74,6 +75,7 @@
 
 @section Scripts {
     <script src="~/js/sweet-delete.js"></script>
+    <script src="~/js/admin-filter.js"></script>
 }
 
 
